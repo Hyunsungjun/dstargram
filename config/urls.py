@@ -4,6 +4,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('photo.urls')), #''을 하면 메인페이지가 됨 
+    path('accounts/', include('accounts.urls')),
 ]
 from django.conf.urls.static import static
 from django.conf import settings
