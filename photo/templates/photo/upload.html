@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}- Upload{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 panel panel-default">
+            <form action="" method="post" enctype="multipart/form-data"> <!--form 태그로 작성한 정보를 어떤 인코딩으로 서버로 전달할지 결정하는 옵션 메서드가 포스트일때만 가능하다 -->
+                {{form.as_p}}
+                {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Upload">
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock content %}
+
+{% comment %}enctype=사용 옵션
+application/x-www-form-urlencoded 기본옵션이라함 모든 문자열을 인코딩해서 전달하며 특수문자는 아스키 헥스값으로 변환하고 띄어쓰기는 +로 변환해서함전달한다환
+multipart/form-data 파일 업로드때 사용하는 옵션이며 데이터를 문자열로 인코딩하지 않고 전달합니다. 
+text/plain 띄어쓰기만 +로 변환하고 특별한 인코딩 없이 전달 
+
+  {% endcomment %}
