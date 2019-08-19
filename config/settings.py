@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photo','accounts',
+    'disqus',
+    'django.contrib.sites', #사이트관리 프레임워크인데 개별 사이트의 도메인관리를 담당한다 디스커스를 사용하려면 필요해서 같이 등록해줬다.
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
+
+DISQUS_WEBSITE_SHORTNAME = 'gram2-django'
+SITE_ID = 1
