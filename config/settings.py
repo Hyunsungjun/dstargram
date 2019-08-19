@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'lk@36t#=je&sjw7tn9t-9@s(wd-h($(s8=n4aqfqenq)#+&40*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'photo','accounts',
     'disqus',
     'django.contrib.sites', #사이트관리 프레임워크인데 개별 사이트의 도메인관리를 담당한다 디스커스를 사용하려면 필요해서 같이 등록해줬다.
+    'storages',#s3 
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -121,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -129,3 +132,17 @@ LOGIN_REDIRECT_URL = '/'
 
 DISQUS_WEBSITE_SHORTNAME = 'gram2-django'
 SITE_ID = 1
+
+
+AWS_ACCESS_KEY_ID = 'AKIAQYRVPLIW2X2DUX4P'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = 'gram-django'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
+
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
